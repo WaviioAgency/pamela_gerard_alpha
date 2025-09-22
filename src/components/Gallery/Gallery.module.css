@@ -1,0 +1,192 @@
+.gallery {
+  padding: 80px 0;
+  background: #ffffff;
+  position: relative;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 700;
+  color: #1999C5;
+  margin: 0;
+  line-height: 1.2;
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #1999C5;
+  border-radius: 2px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.filterButton {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(25, 153, 197, 0.3);
+  color: #1999C5;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filterButton:hover,
+.filterButton:focus {
+  background: rgba(25, 153, 197, 0.1);
+  border-color: #1999C5;
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.filterButton.active {
+  background: #1999C5;
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(25, 153, 197, 0.3);
+}
+
+.filterButton.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(25, 153, 197, 0.4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: 18px;
+  color: #000000;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.stats {
+  text-align: center;
+  padding: 24px;
+  background: rgba(135, 206, 235, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(135, 206, 235, 0.1);
+}
+
+.statsText {
+  font-size: 16px;
+  color: #2c5aa0;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .gallery {
+    padding: 100px 0;
+  }
+
+  .container {
+    padding: 0 32px;
+  }
+
+  .header {
+    margin-bottom: 56px;
+  }
+
+  .filters {
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .filterButton {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .gallery {
+    padding: 120px 0;
+  }
+
+  .header {
+    margin-bottom: 64px;
+  }
+
+  .filters {
+    margin-bottom: 64px;
+  }
+
+  .filterButton {
+    padding: 16px 28px;
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .grid {
+    gap: 56px;
+  }
+}

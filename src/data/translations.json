@@ -1,0 +1,197 @@
+{
+  "nav": {
+    "about": {
+      "fr": "À propos",
+      "en": "About",
+      "hu": "Rólam"
+    },
+    "gallery": {
+      "fr": "Galerie",
+      "en": "Gallery",
+      "hu": "Galéria"
+    },
+    "faq": {
+      "fr": "FAQ",
+      "en": "FAQ",
+      "hu": "GYIK"
+    },
+    "contact": {
+      "fr": "Contact",
+      "en": "Contact",
+      "hu": "Kapcsolat"
+    }
+  },
+  "hero": {
+    "title": {
+      "fr": "Pamela GERARD",
+      "en": "Pamela GERARD",
+      "hu": "Pamela GERARD"
+    },
+    "subtitle": {
+      "fr": "Artiste Peintre",
+      "en": "Artist Painter",
+      "hu": "Festőművész"
+    },
+    "description": {
+      "fr": "Découvrez un univers où les couleurs racontent des histoires et où chaque toile révèle une émotion unique.",
+      "en": "Discover a universe where colors tell stories and each canvas reveals a unique emotion.",
+      "hu": "Fedezzen fel egy univerzumot, ahol a színek történeteket mesélnek, és minden vászon egyedi érzelmet tár fel."
+    }
+  },
+  "about": {
+    "title": {
+      "fr": "À propos de l'artiste",
+      "en": "About the artist",
+      "hu": "A művészről"
+    },
+    "vision": {
+      "fr": "Ma vision transforme vie et émotion en couleurs et poésie, offrir des œuvres accessibles, de qualité, proches de mes clients.",
+      "en": "My vision transforms life and emotion into colors and poetry, offering accessible, quality works, close to my clients.",
+      "hu": "Víziom az életet és az érzelmeket színekké és költészetté alakítja, hozzáférhető, minőségi műveket kínálva, közel az ügyfeleihez."
+    },
+    "experience": {
+      "fr": "Avec plus de 15 ans d'expérience, je crée des œuvres qui touchent l'âme et éveillent les sens. Chaque tableau raconte une histoire unique, née de l'émotion pure et de la passion artistique.",
+      "en": "With over 15 years of experience, I create works that touch the soul and awaken the senses. Each painting tells a unique story, born from pure emotion and artistic passion.",
+      "hu": "Több mint 15 éves tapasztalattal olyan műveket alkotok, amelyek megérintik a lelket és felébresztik az érzékeket. Minden festmény egyedi történetet mesél el, amely tiszta érzelemből és művészi szenvedélyből születik."
+    }
+  },
+  "gallery": {
+    "title": {
+      "fr": "Galerie",
+      "en": "Gallery",
+      "hu": "Galéria"
+    },
+    "allPaintings": {
+      "fr": "Tous les tableaux",
+      "en": "All paintings",
+      "hu": "Összes festmény"
+    },
+    "dimensions": {
+      "fr": "Dimensions",
+      "en": "Dimensions",
+      "hu": "Méretek"
+    },
+    "price": {
+      "fr": "Prix",
+      "en": "Price",
+      "hu": "Ár"
+    },
+    "poem": {
+      "fr": "Poème",
+      "en": "Poem",
+      "hu": "Vers"
+    }
+  },
+  "faq": {
+    "title": {
+      "fr": "Questions fréquentes",
+      "en": "Frequently asked questions",
+      "hu": "Gyakran ismételt kérdések"
+    },
+    "question1": {
+      "fr": "Comment acheter mes tableaux ?",
+      "en": "How to buy my paintings?",
+      "hu": "Hogyan vásárolhatja meg festményeimet?"
+    },
+    "answer1": {
+      "fr": "Pour acquérir l'une de mes œuvres, contactez-moi directement par téléphone au +33 07 61 06 37 36. Nous pourrons discuter de vos préférences, organiser une visite de mon atelier, et convenir des modalités de paiement et de livraison. Chaque tableau est une pièce unique, et je prends plaisir à échanger avec les amateurs d'art pour trouver l'œuvre qui leur correspond parfaitement.",
+      "en": "To acquire one of my works, contact me directly by phone at +33 07 61 06 37 36. We can discuss your preferences, organize a visit to my studio, and agree on payment and delivery terms. Each painting is a unique piece, and I enjoy exchanging with art lovers to find the work that suits them perfectly.",
+      "hu": "Egyik művem megvásárlásához közvetlenül telefonon keresztül vegye fel velem a kapcsolatot a +33 07 61 06 37 36 számon. Megbeszélhetjük az Ön preferenciáit, megszervezhetjük a műteremlátogatást, és megállapodhatunk a fizetési és szállítási feltételekben. Minden festmény egyedi darab, és örömmel beszélgetek a művészetkedvelőkkel, hogy megtaláljuk a számukra tökéletesen megfelelő művet."
+    }
+  },
+  "contact": {
+    "title": {
+      "fr": "Contact",
+      "en": "Contact",
+      "hu": "Kapcsolat"
+    },
+    "subtitle": {
+      "fr": "Parlons de votre projet artistique",
+      "en": "Let's talk about your artistic project",
+      "hu": "Beszéljünk a művészi projektjéről"
+    },
+    "description": {
+      "fr": "Vous souhaitez acquérir une œuvre ou en savoir plus sur mon travail ? N'hésitez pas à me contacter.",
+      "en": "Do you want to acquire a work or learn more about my work? Feel free to contact me.",
+      "hu": "Szeretne művet vásárolni vagy többet megtudni a munkámról? Bátran vegye fel velem a kapcsolatot."
+    },
+    "callButton": {
+      "fr": "Appeler maintenant",
+      "en": "Call now",
+      "hu": "Hívjon most"
+    }
+  },
+  "footer": {
+    "copyright": {
+      "fr": "© 2024 Pamela GERARD. Tous droits réservés.",
+      "en": "© 2024 Pamela GERARD. All rights reserved.",
+      "hu": "© 2024 Pamela GERARD. Minden jog fenntartva."
+    },
+    "adminLogin": {
+      "fr": "Se connecter en tant qu'admin",
+      "en": "Login as admin",
+      "hu": "Bejelentkezés adminként"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": {
+        "fr": "Connexion Administrateur",
+        "en": "Administrator Login",
+        "hu": "Adminisztrátor bejelentkezés"
+      },
+      "username": {
+        "fr": "Nom d'utilisateur",
+        "en": "Username",
+        "hu": "Felhasználónév"
+      },
+      "password": {
+        "fr": "Mot de passe",
+        "en": "Password",
+        "hu": "Jelszó"
+      },
+      "loginButton": {
+        "fr": "Se connecter",
+        "en": "Login",
+        "hu": "Bejelentkezés"
+      },
+      "close": {
+        "fr": "Fermer",
+        "en": "Close",
+        "hu": "Bezárás"
+      },
+      "error": {
+        "fr": "Identifiants incorrects",
+        "en": "Incorrect credentials",
+        "hu": "Hibás bejelentkezési adatok"
+      }
+    },
+    "dashboard": {
+      "welcome": {
+        "fr": "Bienvenue dans votre espace d'administration",
+        "en": "Welcome to your administration space",
+        "hu": "Üdvözöljük az adminisztrációs területen"
+      },
+      "overview": {
+        "fr": "Vue d'ensemble",
+        "en": "Overview",
+        "hu": "Áttekintés"
+      },
+      "categories": {
+        "fr": "Catégories",
+        "en": "Categories",
+        "hu": "Kategóriák"
+      },
+      "paintings": {
+        "fr": "Tableaux",
+        "en": "Paintings",
+        "hu": "Festmények"
+      },
+      "logout": {
+        "fr": "Déconnexion",
+        "en": "Logout",
+        "hu": "Kijelentkezés"
+      }
+    }
+  }
+}

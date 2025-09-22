@@ -1,0 +1,276 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 440px;
+  animation: slideIn 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2c5aa0;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.closeButton:hover,
+.closeButton:focus {
+  background: rgba(0, 0, 0, 0.05);
+  color: #2c5aa0;
+  outline: none;
+}
+
+.form {
+  padding: 24px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(135, 206, 235, 0.3);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: rgba(135, 206, 235, 0.05);
+}
+
+.input:focus {
+  outline: none;
+  border-color: #87ceeb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.1);
+}
+
+.input:disabled {
+  background: rgba(0, 0, 0, 0.05);
+  color: #888;
+  cursor: not-allowed;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 75, 75, 0.1);
+  border: 1px solid rgba(255, 75, 75, 0.3);
+  border-radius: 8px;
+  color: #d63031;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.errorIcon {
+  font-size: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  background: transparent;
+  border: 2px solid rgba(135, 206, 235, 0.3);
+  color: #666;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover,
+.cancelButton:focus {
+  background: rgba(135, 206, 235, 0.1);
+  border-color: #87ceeb;
+  color: #2c5aa0;
+  outline: none;
+}
+
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #2c5aa0, #1a4082);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.submitButton:hover,
+.submitButton:focus {
+  background: linear-gradient(135deg, #1a4082, #2c5aa0);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+  outline: none;
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hint {
+  background: rgba(135, 206, 235, 0.05);
+  padding: 16px 24px;
+  border-top: 1px solid rgba(135, 206, 235, 0.1);
+}
+
+.hintText {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  text-align: center;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .modal {
+    max-width: 480px;
+  }
+
+  .header {
+    padding: 32px 32px 0;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .form {
+    padding: 32px;
+  }
+
+  .formGroup {
+    margin-bottom: 24px;
+  }
+
+  .label {
+    font-size: 15px;
+  }
+
+  .input {
+    padding: 14px 18px;
+  }
+
+  .actions {
+    gap: 16px;
+  }
+
+  .cancelButton,
+  .submitButton {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .hint {
+    padding: 20px 32px;
+  }
+
+  .hintText {
+    font-size: 13px;
+  }
+}
