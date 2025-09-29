@@ -21,15 +21,42 @@ export const AdminProvider = ({ children }) => {
     return savedCategories ? JSON.parse(savedCategories) : [
       { 
         id: 1, 
-        name: { fr: 'Art abstrait', en: 'Abstract Art', hu: 'Absztrakt művészet' }
+        name: {
+          fr: 'Art abstrait',
+          en: 'Abstract Art',
+          hu: 'Absztrakt művészet'
+        },
+        description: {
+          fr: 'Œuvres abstraites explorant les formes et couleurs',
+          en: 'Abstract works exploring shapes and colors',
+          hu: 'Absztrakt művek, amelyek formákat és színeket fedeznek fel'
+        }
       },
       { 
         id: 2, 
-        name: { fr: 'Paysages', en: 'Landscapes', hu: 'Tájképek' }
+        name: {
+          fr: 'Paysages',
+          en: 'Landscapes',
+          hu: 'Tájképek'
+        },
+        description: {
+          fr: 'Paysages naturels et urbains',
+          en: 'Natural and urban landscapes',
+          hu: 'Természeti és városi tájképek'
+        }
       },
       { 
         id: 3, 
-        name: { fr: 'Portraits', en: 'Portraits', hu: 'Portrék' }
+        name: {
+          fr: 'Portraits',
+          en: 'Portraits',
+          hu: 'Portrék'
+        },
+        description: {
+          fr: 'Portraits expressifs et réalistes',
+          en: 'Expressive and realistic portraits',
+          hu: 'Kifejező és realisztikus portrék'
+        }
       }
     ];
   });
@@ -39,57 +66,69 @@ export const AdminProvider = ({ children }) => {
     return savedPaintings ? JSON.parse(savedPaintings) : [
       {
         id: 1,
-        title: { fr: 'Explosion de couleurs', en: 'Color Explosion', hu: 'Színrobbanás' },
-        description: { 
-          fr: 'Une œuvre abstraite vibrant de couleurs vives et d\'émotions.',
-          en: 'An abstract work vibrant with bright colors and emotions.',
-          hu: 'Egy absztrakt mű, amely élénk színekkel és érzelmekkel vibrál.'
+        title: {
+          fr: 'J\'adore les fraises',
+          en: 'I love strawberries',
+          hu: 'Imádom az epret'
+        },
+        description: {
+          fr: 'Une œuvre délicate célébrant la beauté simple des fraises rouges.',
+          en: 'A delicate work celebrating the simple beauty of red strawberries.',
+          hu: 'Finom mű, amely a vörös eper egyszerű szépségét ünnepli.'
         },
         dimensions: '50x70 cm',
         price: '350€',
-        poem: { 
-          fr: 'Les couleurs dansent, la vie s\'exprime.',
-          en: 'Colors dance, life expresses itself.',
-          hu: 'A színek táncolnak, az élet kifejezi magát.'
+        poem: {
+          fr: 'Douces fraises rouges, délices de l\'été.',
+          en: 'Sweet red strawberries, summer delights.',
+          hu: 'Édes vörös eper, nyári gyönyörűség.'
         },
         categoryId: 1,
         image: 'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&w=500'
       },
       {
         id: 2,
-        title: { fr: 'Sérénité marine', en: 'Marine Serenity', hu: 'Tengeri nyugalom' },
-        description: { 
+        title: {
+          fr: 'Sérénité marine',
+          en: 'Marine Serenity',
+          hu: 'Tengeri nyugalom'
+        },
+        description: {
           fr: 'Un paysage marin apaisant aux tons bleus profonds.',
           en: 'A soothing seascape in deep blue tones.',
-          hu: 'Egy megnyugtató tengeri táj mély kék árnyalatokban.'
+          hu: 'Egy megnyugtató tengeri táj mély kék tónusokban.'
         },
         dimensions: '40x60 cm',
         price: '280€',
-        poem: { 
+        poem: {
           fr: 'L\'océan murmure ses secrets éternels.',
           en: 'The ocean whispers its eternal secrets.',
           hu: 'Az óceán suttogja örök titkait.'
         },
         categoryId: 2,
-        image: 'https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=500'
+        image: 'https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=500'
       },
       {
         id: 3,
-        title: { fr: 'Regard profond', en: 'Deep Gaze', hu: 'Mély tekintet' },
-        description: { 
+        title: {
+          fr: 'Regard profond',
+          en: 'Deep Gaze',
+          hu: 'Mély tekintet'
+        },
+        description: {
           fr: 'Portrait expressif capturant l\'âme du modèle.',
-          en: 'Expressive portrait capturing the model\'s soul.',
+          en: 'Expressive portrait capturing the soul of the model.',
           hu: 'Kifejező portré, amely megragadja a modell lelkét.'
         },
         dimensions: '30x40 cm',
         price: '220€',
-        poem: { 
+        poem: {
           fr: 'Dans les yeux se cache l\'histoire d\'une vie.',
           en: 'In the eyes hides the story of a life.',
-          hu: 'A szemekben rejlik egy élet története.'
+          hu: 'A szemekben egy élet története rejtőzik.'
         },
         categoryId: 3,
-        image: 'https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=500'
+        image: 'https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&w=500'
       }
     ];
   });

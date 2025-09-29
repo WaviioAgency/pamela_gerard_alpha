@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAdmin } from '../../contexts/AdminContext';
 import AdminOverview from './AdminOverview';
+import { createMultilingualText, getTranslatedText } from '../../utils/translator';
 import styles from './AdminDashboard.module.css';
 
 const AdminDashboard = ({ onClose }) => {
@@ -10,16 +11,29 @@ const AdminDashboard = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showPaintingModal, setShowPaintingModal] = useState(false);
+  const [categoryModalData, setCategoryModalData] = useState({ name: '', description: '' });
+  const [paintingModalData, setPaintingModalData] = useState({
+    title: '',
+    description: '',
+    dimensions: '',
+    price: '',
+    poem: { fr: '', en: '', hu: '' },
+    categoryId: '',
+    image: ''
+  });
 
   // Category form state
   const [categoryForm, setCategoryForm] = useState({
-    name: { fr: '', en: '', hu: '' }
+    name: '',
+    description: ''
   });
 
   // Painting form state
   const [paintingForm, setPaintingForm] = useState({
-    title: { fr: '', en: '', hu: '' },
-    description: { fr: '', en: '', hu: '' },
+    title: '',
+    description: '',
     dimensions: '',
     price: '',
     poem: { fr: '', en: '', hu: '' },
@@ -34,7 +48,8 @@ const AdminDashboard = ({ onClose }) => {
 
   const resetCategoryForm = () => {
     setCategoryForm({
-      name: { fr: '', en: '', hu: '' }
+      name: '',
+      description: ''
     });
     setIsEditing(false);
     setEditingItem(null);
@@ -54,21 +69,17 @@ const AdminDashboard = ({ onClose }) => {
     setEditingItem(null);
   };
 
-  const handleCategorySubmit = (e) => {
-    e.preventDefault();
-    if (isEditing) {
-      updateCategory(editingItem.id, categoryForm);
-    } else {
-      addCategory(categoryForm);
-    }
-    resetCategoryForm();
-  };
-
   const handlePaintingSubmit = (e) => {
     e.preventDefault();
+    
     const paintingData = {
-      ...paintingForm,
-      categoryId: parseInt(paintingForm.categoryId)
+      title: paintingForm.title,
+      description: paintingForm.description,
+      poem: paintingForm.poem,
+      dimensions: paintingForm.dimensions,
+      price: paintingForm.price,
+      categoryId: parseInt(paintingForm.categoryId),
+      image: paintingForm.image
     };
     
     if (isEditing) {
@@ -76,22 +87,129 @@ const AdminDashboard = ({ onClose }) => {
     } else {
       addPainting(paintingData);
     }
+    
     resetPaintingForm();
   };
 
+  const handleCategorySubmit = (e) => {
+    e.preventDefault();
+    let categoryData;
+    
+    if (isEditing) {
+      // When editing, preserve existing translations and update current language
+      categoryData = {
+        name: {
+          ...editingItem.name,
+          [language]: categoryForm.name
+        },
+        description: {
+          ...editingItem.description,
+          [language]: categoryForm.description
+        }
+      };
+      updateCategory(editingItem.id, categoryData);
+    } else {
+      // When creating new category, auto-translate from French
+      categoryData = {
+        name: createMultilingualText(categoryForm.name),
+        description: createMultilingualText(categoryForm.description)
+      };
+      addCategory(categoryData);
+    }
+    
+    resetCategoryForm();
+  };
+
+  const handleCategoryModalSubmit = (e) => {
+    e.preventDefault();
+    const categoryData = {
+      name: {
+        ...editingItem.name,
+        [language]: categoryModalData.name
+      },
+      description: {
+        ...editingItem.description,
+        [language]: categoryModalData.description
+      }
+    };
+    updateCategory(editingItem.id, categoryData);
+    setShowCategoryModal(false);
+    setCategoryModalData({ name: '', description: '' });
+    setEditingItem(null);
+  };
+
+  const handlePaintingModalSubmit = (e) => {
+    e.preventDefault();
+    
+    const paintingData = {
+      title: createMultilingualText(paintingModalData.title),
+      description: createMultilingualText(paintingModalData.description),
+      poem: paintingModalData.poem,
+      dimensions: paintingModalData.dimensions,
+      price: paintingModalData.price,
+      categoryId: parseInt(paintingModalData.categoryId),
+      image: paintingModalData.image
+    };
+    
+    updatePainting(editingItem.id, paintingData);
+    setShowPaintingModal(false);
+    setPaintingModalData({
+      title: '',
+      description: '',
+      dimensions: '',
+      price: '',
+      poem: '',
+      categoryId: '',
+      image: ''
+    });
+    setEditingItem(null);
+  };
+
+  const closeCategoryModal = () => {
+    setShowCategoryModal(false);
+    setCategoryModalData({ name: '', description: '' });
+    setEditingItem(null);
+  };
+
+  const closePaintingModal = () => {
+    setShowPaintingModal(false);
+    setPaintingModalData({
+      title: '',
+      description: '',
+      dimensions: '',
+      price: '',
+      poem: '',
+      categoryId: '',
+      image: ''
+    });
+    setEditingItem(null);
+  };
+
   const startEditCategory = (category) => {
-    setCategoryForm(category);
-    setIsEditing(true);
+    setCategoryModalData({
+      name: getTranslatedText(category.name, language),
+      description: getTranslatedText(category.description, language)
+    });
     setEditingItem(category);
+    setShowCategoryModal(true);
   };
 
   const startEditPainting = (painting) => {
-    setPaintingForm({
-      ...painting,
-      categoryId: painting.categoryId.toString()
+    setPaintingModalData({
+      title: getTranslatedText(painting.title, 'fr'),
+      description: getTranslatedText(painting.description, 'fr'),
+      poem: {
+        fr: getTranslatedText(painting.poem, 'fr') || '',
+        en: getTranslatedText(painting.poem, 'en') || '',
+        hu: getTranslatedText(painting.poem, 'hu') || ''
+      },
+      dimensions: painting.dimensions || '',
+      price: painting.price || '',
+      categoryId: painting.categoryId.toString(),
+      image: painting.image || ''
     });
-    setIsEditing(true);
     setEditingItem(painting);
+    setShowPaintingModal(true);
   };
 
   const handleDeleteCategory = (categoryId) => {
@@ -134,41 +252,28 @@ const AdminDashboard = ({ onClose }) => {
               <form onSubmit={handleCategorySubmit} className={styles.form}>
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
-                    <label className={styles.label}>Nom (Français) *</label>
+                    <label className={styles.label}>Nom de la catégorie *</label>
                     <input
                       type="text"
-                      value={categoryForm.name.fr}
+                      value={categoryForm.name}
                       onChange={(e) => setCategoryForm(prev => ({
                         ...prev,
-                        name: { ...prev.name, fr: e.target.value }
+                        name: e.target.value
                       }))}
                       className={styles.input}
                       required
                     />
                   </div>
                   <div className={styles.formGroup}>
-                    <label className={styles.label}>Nom (English) *</label>
-                    <input
-                      type="text"
-                      value={categoryForm.name.en}
+                    <label className={styles.label}>Description de la catégorie *</label>
+                    <textarea
+                      value={categoryForm.description}
                       onChange={(e) => setCategoryForm(prev => ({
                         ...prev,
-                        name: { ...prev.name, en: e.target.value }
+                        description: e.target.value
                       }))}
-                      className={styles.input}
-                      required
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Nom (Magyar) *</label>
-                    <input
-                      type="text"
-                      value={categoryForm.name.hu}
-                      onChange={(e) => setCategoryForm(prev => ({
-                        ...prev,
-                        name: { ...prev.name, hu: e.target.value }
-                      }))}
-                      className={styles.input}
+                      className={styles.textarea}
+                      rows="3"
                       required
                     />
                   </div>
@@ -192,8 +297,8 @@ const AdminDashboard = ({ onClose }) => {
                 {categories.map(category => (
                   <div key={category.id} className={styles.item}>
                     <div className={styles.itemContent}>
-                      <h5>{category.name[language] || category.name.fr}</h5>
-                      <p>FR: {category.name.fr} | EN: {category.name.en} | HU: {category.name.hu}</p>
+                      <h5>{getTranslatedText(category.name, language)}</h5>
+                      <p>{getTranslatedText(category.description, language)}</p>
                     </div>
                     <div className={styles.itemActions}>
                       <button
@@ -233,86 +338,121 @@ const AdminDashboard = ({ onClose }) => {
 
             <div className={styles.formSection}>
               <form onSubmit={handlePaintingSubmit} className={styles.form}>
-                <div className={styles.formRow}>
+                <div className={styles.multilingualRow}>
                   <div className={styles.formGroup}>
-                    <label className={styles.label}>Titre (Français) *</label>
+                    <h4 className={styles.languageHeader}>🇫🇷 Français</h4>
+                    <label className={styles.label}>Titre *</label>
                     <input
                       type="text"
-                      value={paintingForm.title.fr}
+                      value={paintingForm.title?.fr || ''}
                       onChange={(e) => setPaintingForm(prev => ({
                         ...prev,
                         title: { ...prev.title, fr: e.target.value }
                       }))}
                       className={styles.input}
+                      placeholder="ex: La Joconde"
                       required
                     />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Titre (English) *</label>
-                    <input
-                      type="text"
-                      value={paintingForm.title.en}
-                      onChange={(e) => setPaintingForm(prev => ({
-                        ...prev,
-                        title: { ...prev.title, en: e.target.value }
-                      }))}
-                      className={styles.input}
-                      required
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Titre (Magyar) *</label>
-                    <input
-                      type="text"
-                      value={paintingForm.title.hu}
-                      onChange={(e) => setPaintingForm(prev => ({
-                        ...prev,
-                        title: { ...prev.title, hu: e.target.value }
-                      }))}
-                      className={styles.input}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.formRow}>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Description (Français) *</label>
+                    <label className={styles.label}>Description *</label>
                     <textarea
-                      value={paintingForm.description.fr}
+                      value={paintingForm.description?.fr || ''}
                       onChange={(e) => setPaintingForm(prev => ({
                         ...prev,
                         description: { ...prev.description, fr: e.target.value }
                       }))}
                       className={styles.textarea}
                       rows="3"
+                      placeholder="Description du tableau en français"
                       required
                     />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Description (English) *</label>
+                    <label className={styles.label}>Poème</label>
                     <textarea
-                      value={paintingForm.description.en}
+                      value={paintingForm.poem?.fr || ''}
+                      onChange={(e) => setPaintingForm(prev => ({
+                        ...prev,
+                        poem: { ...prev.poem, fr: e.target.value }
+                      }))}
+                      className={styles.textarea}
+                      rows="2"
+                      placeholder="Saisissez le poème en français"
+                    />
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <h4 className={styles.languageHeader}>🇬🇧 English</h4>
+                    <label className={styles.label}>Title *</label>
+                    <input
+                      type="text"
+                      value={paintingForm.title?.en || ''}
+                      onChange={(e) => setPaintingForm(prev => ({
+                        ...prev,
+                        title: { ...prev.title, en: e.target.value }
+                      }))}
+                      className={styles.input}
+                      placeholder="ex: The Mona Lisa"
+                      required
+                    />
+                    <label className={styles.label}>Description *</label>
+                    <textarea
+                      value={paintingForm.description?.en || ''}
                       onChange={(e) => setPaintingForm(prev => ({
                         ...prev,
                         description: { ...prev.description, en: e.target.value }
                       }))}
                       className={styles.textarea}
                       rows="3"
+                      placeholder="Description of the painting in English"
                       required
                     />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Description (Magyar) *</label>
+                    <label className={styles.label}>Poem</label>
                     <textarea
-                      value={paintingForm.description.hu}
+                      value={paintingForm.poem?.en || ''}
+                      onChange={(e) => setPaintingForm(prev => ({
+                        ...prev,
+                        poem: { ...prev.poem, en: e.target.value }
+                      }))}
+                      className={styles.textarea}
+                      rows="2"
+                      placeholder="Enter the poem in English"
+                    />
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <h4 className={styles.languageHeader}>🇭🇺 Magyar</h4>
+                    <label className={styles.label}>Cím *</label>
+                    <input
+                      type="text"
+                      value={paintingForm.title?.hu || ''}
+                      onChange={(e) => setPaintingForm(prev => ({
+                        ...prev,
+                        title: { ...prev.title, hu: e.target.value }
+                      }))}
+                      className={styles.input}
+                      placeholder="ex: Mona Lisa"
+                      required
+                    />
+                    <label className={styles.label}>Leírás *</label>
+                    <textarea
+                      value={paintingForm.description?.hu || ''}
                       onChange={(e) => setPaintingForm(prev => ({
                         ...prev,
                         description: { ...prev.description, hu: e.target.value }
                       }))}
                       className={styles.textarea}
                       rows="3"
+                      placeholder="A festmény leírása magyarul"
                       required
+                    />
+                    <label className={styles.label}>Vers</label>
+                    <textarea
+                      value={paintingForm.poem?.hu || ''}
+                      onChange={(e) => setPaintingForm(prev => ({
+                        ...prev,
+                        poem: { ...prev.poem, hu: e.target.value }
+                      }))}
+                      className={styles.textarea}
+                      rows="2"
+                      placeholder="Írja be a verset magyarul"
                     />
                   </div>
                 </div>
@@ -336,7 +476,7 @@ const AdminDashboard = ({ onClose }) => {
                       value={paintingForm.price}
                       onChange={(e) => setPaintingForm(prev => ({ ...prev, price: e.target.value }))}
                       className={styles.input}
-                      placeholder="ex: 350€"
+                      placeholder="ex: 350"
                       required
                     />
                   </div>
@@ -351,7 +491,7 @@ const AdminDashboard = ({ onClose }) => {
                       <option value="">Sélectionner une catégorie</option>
                       {categories.map(category => (
                         <option key={category.id} value={category.id}>
-                          {category.name[language] || category.name.fr}
+                          {getTranslatedText(category.name, language)}
                         </option>
                       ))}
                     </select>
@@ -368,45 +508,6 @@ const AdminDashboard = ({ onClose }) => {
                     placeholder="https://example.com/image.jpg"
                     required
                   />
-                </div>
-
-                <div className={styles.formRow}>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Poème (Français)</label>
-                    <textarea
-                      value={paintingForm.poem.fr}
-                      onChange={(e) => setPaintingForm(prev => ({
-                        ...prev,
-                        poem: { ...prev.poem, fr: e.target.value }
-                      }))}
-                      className={styles.textarea}
-                      rows="2"
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Poème (English)</label>
-                    <textarea
-                      value={paintingForm.poem.en}
-                      onChange={(e) => setPaintingForm(prev => ({
-                        ...prev,
-                        poem: { ...prev.poem, en: e.target.value }
-                      }))}
-                      className={styles.textarea}
-                      rows="2"
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Poème (Magyar)</label>
-                    <textarea
-                      value={paintingForm.poem.hu}
-                      onChange={(e) => setPaintingForm(prev => ({
-                        ...prev,
-                        poem: { ...prev.poem, hu: e.target.value }
-                      }))}
-                      className={styles.textarea}
-                      rows="2"
-                    />
-                  </div>
                 </div>
 
                 <div className={styles.formActions}>
@@ -432,13 +533,13 @@ const AdminDashboard = ({ onClose }) => {
                       <div className={styles.paintingItem}>
                         <img
                           src={painting.image}
-                          alt={painting.title[language] || painting.title.fr}
+                          alt={getTranslatedText(painting.title, language)}
                           className={styles.paintingImage}
                         />
                         <div className={styles.itemContent}>
-                          <h5>{painting.title[language] || painting.title.fr}</h5>
+                          <h5>{getTranslatedText(painting.title, language)}</h5>
                           <p>{painting.dimensions} - {painting.price}</p>
-                          <p><small>Catégorie: {category?.name[language] || category?.name.fr || 'Non trouvée'}</small></p>
+                          <p><small>Catégorie: {category ? getTranslatedText(category.name, language) : 'Non trouvée'}</small></p>
                         </div>
                       </div>
                       <div className={styles.itemActions}>
@@ -447,14 +548,14 @@ const AdminDashboard = ({ onClose }) => {
                           className={styles.editButton}
                           title="Modifier"
                         >
-                          ✏️
+                          ✎
                         </button>
                         <button
                           onClick={() => handleDeletePainting(painting.id)}
                           className={styles.deleteButton}
                           title="Supprimer"
                         >
-                          🗑️
+                          ✕
                         </button>
                       </div>
                     </div>
@@ -511,6 +612,223 @@ const AdminDashboard = ({ onClose }) => {
         <div className={styles.main}>
           {renderTabContent()}
         </div>
+
+        {/* Category Edit Modal */}
+        {showCategoryModal && (
+          <div className={styles.modalOverlay} onClick={closeCategoryModal}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
+                <h3>Modifier la catégorie</h3>
+                <button
+                  className={styles.modalCloseButton}
+                  onClick={closeCategoryModal}
+                  aria-label="Fermer"
+                >
+                  ✕
+                </button>
+              </div>
+              <form onSubmit={handleCategoryModalSubmit} className={styles.modalForm}>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Nom de la catégorie *</label>
+                  <input
+                    type="text"
+                    value={categoryModalData.name}
+                    onChange={(e) => setCategoryModalData(prev => ({
+                      ...prev,
+                      name: e.target.value
+                    }))}
+                    className={styles.input}
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Description *</label>
+                  <textarea
+                    value={categoryModalData.description}
+                    onChange={(e) => setCategoryModalData(prev => ({
+                      ...prev,
+                      description: e.target.value
+                    }))}
+                    className={styles.textarea}
+                    rows="3"
+                    required
+                  />
+                </div>
+                <div className={styles.modalActions}>
+                  <button type="button" onClick={closeCategoryModal} className={styles.cancelButton}>
+                    Annuler
+                  </button>
+                  <button type="submit" className={styles.submitButton}>
+                    Sauvegarder
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Painting Edit Modal */}
+        {showPaintingModal && (
+          <div className={styles.modalOverlay} onClick={closePaintingModal}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
+                <h3>Modifier le tableau</h3>
+                <button
+                  className={styles.modalCloseButton}
+                  onClick={closePaintingModal}
+                  aria-label="Fermer"
+                >
+                  ✕
+                </button>
+              </div>
+              <form onSubmit={handlePaintingModalSubmit} className={styles.modalForm}>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Titre du tableau (en français) *</label>
+                  <input
+                    type="text"
+                    value={paintingModalData.title}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      title: e.target.value
+                    }))}
+                    className={styles.input}
+                    required
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Description (en français) *</label>
+                  <textarea
+                    value={paintingModalData.description}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      description: e.target.value
+                    }))}
+                    className={styles.textarea}
+                    rows="3"
+                    required
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Dimensions *</label>
+                  <input
+                    type="text"
+                    value={paintingModalData.dimensions}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      dimensions: e.target.value
+                    }))}
+                    className={styles.input}
+                    placeholder="ex: 50x70 cm"
+                    required
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Prix *</label>
+                  <input
+                    type="text"
+                    value={paintingModalData.price}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      price: e.target.value
+                    }))}
+                    className={styles.input}
+                    placeholder="ex: 350€"
+                    required
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Catégorie *</label>
+                  <select
+                    value={paintingModalData.categoryId}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      categoryId: e.target.value
+                    }))}
+                    className={styles.select}
+                    required
+                  >
+                    <option value="">Sélectionner une catégorie</option>
+                    {categories.map(category => (
+                      <option key={category.id} value={category.id}>
+                        {getTranslatedText(category.name, language)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>URL de l'image *</label>
+                  <input
+                    type="url"
+                    value={paintingModalData.image}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      image: e.target.value
+                    }))}
+                    className={styles.input}
+                    placeholder="https://example.com/image.jpg"
+                    required
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Poème (en français)</label>
+                  <textarea
+                    value={paintingModalData.poem?.fr || ''}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      poem: { ...prev.poem, fr: e.target.value }
+                    }))}
+                    className={styles.textarea}
+                    rows="2"
+                    placeholder="Saisissez le poème en français"
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Poème (en anglais)</label>
+                  <textarea
+                    value={paintingModalData.poem?.en || ''}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      poem: { ...prev.poem, en: e.target.value }
+                    }))}
+                    className={styles.textarea}
+                    rows="2"
+                    placeholder="Enter the poem in English"
+                  />
+                </div>
+                
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Poème (en hongrois)</label>
+                  <textarea
+                    value={paintingModalData.poem?.hu || ''}
+                    onChange={(e) => setPaintingModalData(prev => ({
+                      ...prev,
+                      poem: { ...prev.poem, hu: e.target.value }
+                    }))}
+                    className={styles.textarea}
+                    rows="2"
+                    placeholder="Írja be a verset magyarul"
+                  />
+                </div>
+                
+                <div className={styles.modalActions}>
+                  <button type="button" onClick={closePaintingModal} className={styles.cancelButton}>
+                    Annuler
+                  </button>
+                  <button type="submit" className={styles.submitButton}>
+                    Sauvegarder
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 .gallery {
-  padding: 80px 0;
+  padding: 100px 0;
   background: #ffffff;
   position: relative;
   text-align: center;
@@ -8,53 +8,60 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 24px;
   position: relative;
   z-index: 1;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 60px;
 }
 
 .title {
-  font-size: clamp(28px, 6vw, 42px);
-  font-weight: 700;
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 300;
   color: #1999C5;
   margin: 0;
   line-height: 1.2;
   position: relative;
+  letter-spacing: -0.5px;
 }
 
-.title::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: #1999C5;
-  border-radius: 2px;
+.categoryDescription {
+  margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.categoryDescriptionText {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 48px;
+  gap: 8px;
+  margin-bottom: 60px;
 }
 
 .filterButton {
-  background: rgba(255, 255, 255, 0.8);
-  border: 2px solid rgba(25, 153, 197, 0.3);
+  background: transparent;
+  border: 1px solid #ddd;
   color: #1999C5;
-  padding: 12px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -62,29 +69,23 @@
 
 .filterButton:hover,
 .filterButton:focus {
-  background: rgba(25, 153, 197, 0.1);
+  background: transparent;
   border-color: #1999C5;
-  transform: translateY(-2px);
   outline: none;
 }
 
 .filterButton.active {
-  background: #1999C5;
-  color: white;
-  border-color: transparent;
-  box-shadow: 0 4px 15px rgba(25, 153, 197, 0.3);
-}
-
-.filterButton.active:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(25, 153, 197, 0.4);
+  background: transparent;
+  color: #1999C5;
+  border-color: #1999C5;
+  border-width: 2px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
-  margin-bottom: 48px;
+  gap: 40px;
+  margin-bottom: 60px;
 }
 
 .emptyState {
@@ -93,36 +94,37 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
 }
 
 .emptyIcon {
-  font-size: 64px;
-  margin-bottom: 16px;
-  opacity: 0.5;
+  font-size: 48px;
+  margin-bottom: 20px;
+  opacity: 0.3;
 }
 
 .emptyText {
-  font-size: 18px;
+  font-size: 16px;
   color: #000000;
   margin: 0;
   line-height: 1.5;
+  font-weight: 300;
 }
 
 .stats {
   text-align: center;
-  padding: 24px;
-  background: rgba(135, 206, 235, 0.05);
-  border-radius: 12px;
-  border: 1px solid rgba(135, 206, 235, 0.1);
+  padding: 20px;
+  background: transparent;
+  border-top: 1px solid #eee;
 }
 
 .statsText {
-  font-size: 16px;
-  color: #2c5aa0;
-  font-weight: 500;
+  font-size: 14px;
+  color: #666;
+  font-weight: 300;
   margin: 0;
+  letter-spacing: 0.5px;
 }
 
 /* Tablet */

@@ -1,18 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAdmin } from '../../contexts/AdminContext';
+import { getTranslatedText } from '../../utils/translator';
 import PaintingCard from './PaintingCard';
 import styles from './Gallery.module.css';
 
 const Gallery = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { categories, paintings } = useAdmin();
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = useMemo(() => {
-    const allFilter = { id: 'all', name: { fr: t('gallery.allPaintings'), en: t('gallery.allPaintings'), hu: t('gallery.allPaintings') } };
+    const allFilter = { id: 'all', name: t('gallery.allPaintings') };
     return [allFilter, ...categories];
-  }, [categories, t]);
+  }, [categories, t, language]);
 
   const filteredPaintings = useMemo(() => {
     if (activeFilter === 'all') {
@@ -41,7 +42,7 @@ const Gallery = () => {
               onClick={() => handleFilterChange(filter.id)}
               aria-pressed={activeFilter === filter.id}
             >
-              {filter.name[t.language] || filter.name.fr || filter.name}
+              {filter.id === 'all' ? filter.name : getTranslatedText(filter.name, language)}
             </button>
           ))}
         </div>
@@ -67,6 +68,16 @@ const Gallery = () => {
             <p className={styles.statsText}>
               {filteredPaintings.length} œuvre{filteredPaintings.length > 1 ? 's' : ''} 
               {activeFilter !== 'all' && ' dans cette catégorie'}
+            </p>
+          </div>
+        )}
+        {activeFilter !== 'all' && (
+          <div className={styles.categoryDescription}>
+            <p className={styles.categoryDescriptionText}>
+              {getTranslatedText(
+                categories.find(cat => cat.id === activeFilter)?.description,
+                language
+              )}
             </p>
           </div>
         )}

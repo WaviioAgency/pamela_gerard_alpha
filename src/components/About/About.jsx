@@ -37,24 +37,24 @@ const About = () => {
               <div className={styles.highlight}>
                 <div className={styles.highlightIcon}>🎨</div>
                 <div className={styles.highlightContent}>
-                  <h3 className={styles.highlightTitle}>15+ ans</h3>
-                  <p className={styles.highlightText}>d'expérience artistique</p>
+                  <h3 className={styles.highlightTitle}>{t('about.years')}</h3>
+                  <p className={styles.highlightText}>{t('about.yearsText')}</p>
                 </div>
               </div>
               
               <div className={styles.highlight}>
                 <div className={styles.highlightIcon}>❤️</div>
                 <div className={styles.highlightContent}>
-                  <h3 className={styles.highlightTitle}>Passion</h3>
-                  <p className={styles.highlightText}>pour les couleurs et émotions</p>
+                  <h3 className={styles.highlightTitle}>{t('about.passion')}</h3>
+                  <p className={styles.highlightText}>{t('about.passionText')}</p>
                 </div>
               </div>
               
               <div className={styles.highlight}>
                 <div className={styles.highlightIcon}>🤝</div>
                 <div className={styles.highlightContent}>
-                  <h3 className={styles.highlightTitle}>Proximité</h3>
-                  <p className={styles.highlightText}>avec mes clients</p>
+                  <h3 className={styles.highlightTitle}>{t('about.proximity')}</h3>
+                  <p className={styles.highlightText}>{t('about.proximityText')}</p>
                 </div>
               </div>
             </div>

@@ -42,14 +42,15 @@ const Footer = () => {
               <p className={styles.copyright}>
                 {t('footer.copyright').replace('2024', currentYear.toString())}
               </p>
-              <p className={styles.phone}>
-                <a href="tel:+33761063736" className={styles.phoneLink}>
-                  +33 7 61 06 37 36
-                </a>
-              </p>
             </div>
 
             <div className={styles.rightSection}>
+              <div className={styles.phoneSection}>
+                <p className={styles.phoneLabel}>{t('footer.phone')}:</p>
+                <a href="tel:+33761063736" className={styles.phoneLink}>
+                  +33 7 61 06 37 36
+                </a>
+              </div>
               <button
                 className={styles.adminButton}
                 onClick={handleAdminClick}

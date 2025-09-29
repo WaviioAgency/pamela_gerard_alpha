@@ -29,13 +29,13 @@
     },
     "subtitle": {
       "fr": "Artiste Peintre",
-      "en": "Artist Painter",
+      "en": "Painter Artist",
       "hu": "Festőművész"
     },
     "description": {
       "fr": "Découvrez un univers où les couleurs racontent des histoires et où chaque toile révèle une émotion unique.",
-      "en": "Discover a universe where colors tell stories and each canvas reveals a unique emotion.",
-      "hu": "Fedezzen fel egy univerzumot, ahol a színek történeteket mesélnek, és minden vászon egyedi érzelmet tár fel."
+      "en": "Discover a universe where colors tell stories and where each canvas reveals a unique emotion.",
+      "hu": "Fedezzen fel egy univerzumot, ahol a színek történeteket mesélnek, és ahol minden vászon egyedi érzelmet tár fel."
     }
   },
   "about": {
@@ -46,13 +46,43 @@
     },
     "vision": {
       "fr": "Ma vision transforme vie et émotion en couleurs et poésie, offrir des œuvres accessibles, de qualité, proches de mes clients.",
-      "en": "My vision transforms life and emotion into colors and poetry, offering accessible, quality works, close to my clients.",
-      "hu": "Víziom az életet és az érzelmeket színekké és költészetté alakítja, hozzáférhető, minőségi műveket kínálva, közel az ügyfeleihez."
+      "en": "My vision transforms life and emotion into colors and poetry, to offer accessible, quality works, close to my clients.",
+      "hu": "Víziom az életet és az érzelmeket színekké és költészetté alakítja, hogy hozzáférhető, minőségi műveket kínáljak, közel az ügyfeleihez."
     },
     "experience": {
       "fr": "Avec plus de 15 ans d'expérience, je crée des œuvres qui touchent l'âme et éveillent les sens. Chaque tableau raconte une histoire unique, née de l'émotion pure et de la passion artistique.",
-      "en": "With over 15 years of experience, I create works that touch the soul and awaken the senses. Each painting tells a unique story, born from pure emotion and artistic passion.",
-      "hu": "Több mint 15 éves tapasztalattal olyan műveket alkotok, amelyek megérintik a lelket és felébresztik az érzékeket. Minden festmény egyedi történetet mesél el, amely tiszta érzelemből és művészi szenvedélyből születik."
+      "en": "With more than 15 years of experience, I create works that touch the soul and awaken the senses. Each painting tells a unique story, born from pure emotion and artistic passion.",
+      "hu": "Több mint 15 éves tapasztalattal olyan műveket alkotok, amelyek megérintik a lelket és felébresztik az érzékeket. Minden festmény egyedi történetet mesél, amely tiszta érzelemből és művészi szenvedélyből születik."
+    },
+    "years": {
+      "fr": "15+ ans",
+      "en": "15+ years",
+      "hu": "15+ év"
+    },
+    "yearsText": {
+      "fr": "d'expérience artistique",
+      "en": "of artistic experience",
+      "hu": "művészi tapasztalat"
+    },
+    "passion": {
+      "fr": "Passion",
+      "en": "Passion",
+      "hu": "Szenvedély"
+    },
+    "passionText": {
+      "fr": "pour les couleurs et émotions",
+      "en": "for colors and emotions",
+      "hu": "a színek és érzelmek iránt"
+    },
+    "proximity": {
+      "fr": "Proximité",
+      "en": "Proximity",
+      "hu": "Közelség"
+    },
+    "proximityText": {
+      "fr": "avec mes clients",
+      "en": "with my clients",
+      "hu": "ügyfeleimmel"
     }
   },
   "gallery": {
@@ -112,8 +142,8 @@
     },
     "description": {
       "fr": "Vous souhaitez acquérir une œuvre ou en savoir plus sur mon travail ? N'hésitez pas à me contacter.",
-      "en": "Do you want to acquire a work or learn more about my work? Feel free to contact me.",
-      "hu": "Szeretne művet vásárolni vagy többet megtudni a munkámról? Bátran vegye fel velem a kapcsolatot."
+      "en": "Do you wish to acquire a work or learn more about my work? Do not hesitate to contact me.",
+      "hu": "Szeretne művet vásárolni vagy többet megtudni a munkámról? Ne habozzon kapcsolatba lépni velem."
     },
     "callButton": {
       "fr": "Appeler maintenant",
@@ -126,6 +156,11 @@
       "fr": "© 2024 Pamela GERARD. Tous droits réservés.",
       "en": "© 2024 Pamela GERARD. All rights reserved.",
       "hu": "© 2024 Pamela GERARD. Minden jog fenntartva."
+    },
+    "phone": {
+      "fr": "Téléphone",
+      "en": "Phone",
+      "hu": "Telefon"
     },
     "adminLogin": {
       "fr": "Se connecter en tant qu'admin",

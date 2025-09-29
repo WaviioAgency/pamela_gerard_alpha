@@ -4,8 +4,18 @@ import { useAdmin } from '../../contexts/AdminContext';
 import styles from './AdminOverview.module.css';
 
 const AdminOverview = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { categories, paintings } = useAdmin();
+
+  const getTranslatedText = (text) => {
+    if (typeof text === 'string') {
+      return text;
+    }
+    if (typeof text === 'object' && text !== null) {
+      return text[language] || text.fr || text.en || text.hu || '';
+    }
+    return '';
+  };
 
   const stats = [
     {
@@ -41,7 +51,7 @@ const AdminOverview = () => {
     );
 
     const category = categories.find(cat => cat.id === parseInt(mostUsedCategoryId));
-    return category ? category.name.fr : 'Aucune';
+    return category ? getTranslatedText(category.name) : 'Aucune';
   }
 
   return (

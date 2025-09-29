@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { getTranslatedText } from '../../utils/translator';
 import styles from './PaintingCard.module.css';
 
 const PaintingCard = ({ painting }) => {
   const { t, language } = useLanguage();
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [showPoem, setShowPoem] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
-  };
-
-  const getTranslatedText = (textObj) => {
-    if (typeof textObj === 'string') return textObj;
-    return textObj[language] || textObj.fr || textObj.en || '';
   };
 
   return (
@@ -31,24 +26,15 @@ const PaintingCard = ({ painting }) => {
           onLoad={handleImageLoad}
           loading="lazy"
         />
-        <div className={styles.overlay}>
-          <button
-            className={styles.poemButton}
-            onClick={() => setShowPoem(!showPoem)}
-            aria-label="Afficher le poème"
-          >
-            📝
-          </button>
-        </div>
       </div>
 
       <div className={styles.content}>
         <h3 className={styles.title}>
-          {getTranslatedText(painting.title)}
+          {getTranslatedText(painting.title, language)}
         </h3>
         
         <p className={styles.description}>
-          {getTranslatedText(painting.description)}
+          {getTranslatedText(painting.description, language)}
         </p>
 
         <div className={styles.details}>
@@ -58,15 +44,15 @@ const PaintingCard = ({ painting }) => {
           </div>
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>{t('gallery.price')}:</span>
-            <span className={styles.detailValue}>{painting.price}</span>
+            <span className={styles.detailValue}>{painting.price}€</span>
           </div>
         </div>
 
-        {showPoem && (
+        {getTranslatedText(painting.poem, language) && (
           <div className={styles.poemContainer}>
             <h4 className={styles.poemTitle}>{t('gallery.poem')}:</h4>
             <blockquote className={styles.poem}>
-              "{getTranslatedText(painting.poem)}"
+              "{getTranslatedText(painting.poem, language)}"
             </blockquote>
           </div>
         )}

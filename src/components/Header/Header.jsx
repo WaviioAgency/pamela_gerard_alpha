@@ -40,7 +40,11 @@ const Header = () => {
       <div className={styles.container}>
         {/* Logo */}
         <div className={styles.logo}>
-          <h1>Pamela GERARD</h1>
+          <img 
+            src="/logo_pg_2.png" 
+            alt="Pamela GERARD - Artiste Peintre"
+            className={styles.logoImage}
+          />
         </div>
 
         {/* Desktop Navigation */}
