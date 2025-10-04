@@ -11,8 +11,8 @@ const About = () => {
         <div className={styles.content}>
           <div className={styles.imageSection}>
             <div className={styles.imageContainer}>
-              <img 
-                src="https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=600" 
+              <img
+                src="/5.jpg"
                 alt="Portrait de Pamela GERARD"
                 loading="lazy"
               />

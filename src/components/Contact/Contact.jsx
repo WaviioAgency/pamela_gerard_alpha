@@ -34,7 +34,7 @@ const Contact = () => {
             <div className={styles.artworkPreview}>
               <div className={styles.artwork}>
                 <img
-                  src="https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  src="/4 copy.jpg"
                   alt="Œuvre d'art de Pamela GERARD"
                   loading="lazy"
                 />

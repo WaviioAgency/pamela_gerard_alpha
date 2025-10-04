@@ -42,6 +42,14 @@ const Footer = () => {
               <p className={styles.copyright}>
                 {t('footer.copyright').replace('2024', currentYear.toString())}
               </p>
+              <a
+                href="https://www.waviio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.waviioLink}
+              >
+                Fait avec ❤️ par Waviio Agency
+              </a>
             </div>
 
             <div className={styles.rightSection}>

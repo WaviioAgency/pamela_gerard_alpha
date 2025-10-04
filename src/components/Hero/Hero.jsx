@@ -48,9 +48,9 @@ const Hero = () => {
           </div>
           <div className={styles.imageContainer}>
             <div className={styles.heroImage}>
-              <img 
-                src="https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&w=600" 
-              src="https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=600" 
+              <img
+                src="/1.jpg"
+                alt="Pamela Gerard Artist"
                 loading="lazy"
               />
               <div className={styles.imageOverlay}></div>

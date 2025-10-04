@@ -3,7 +3,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { useAdmin } from '../../contexts/AdminContext';
 import styles from './AdminOverview.module.css';
 
-const AdminOverview = () => {
+const AdminOverview = ({ onNavigateToTab, onAddCategory, onAddPainting }) => {
   const { t, language } = useLanguage();
   const { categories, paintings } = useAdmin();
 
@@ -80,11 +80,23 @@ const AdminOverview = () => {
       <div className={styles.quickActions}>
         <h3 className={styles.quickActionsTitle}>Actions rapides</h3>
         <div className={styles.actionButtons}>
-          <button className={styles.actionButton}>
+          <button 
+            className={styles.actionButton}
+            onClick={() => {
+              onNavigateToTab('paintings');
+              onAddPainting();
+            }}
+          >
             <span className={styles.actionIcon}>➕</span>
             Ajouter un tableau
           </button>
-          <button className={styles.actionButton}>
+          <button 
+            className={styles.actionButton}
+            onClick={() => {
+              onNavigateToTab('categories');
+              onAddCategory();
+            }}
+          >
             <span className={styles.actionIcon}>📁</span>
             Créer une catégorie
           </button>

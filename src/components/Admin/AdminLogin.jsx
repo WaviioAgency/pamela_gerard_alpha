@@ -91,7 +91,7 @@ const AdminLogin = ({ onClose, onSuccess }) => {
               value={formData.password}
               onChange={handleInputChange}
               className={styles.input}
-              placeholder="admin123"
+              placeholder="password"
               required
               disabled={isLoading}
             />
@@ -132,7 +132,7 @@ const AdminLogin = ({ onClose, onSuccess }) => {
 
         <div className={styles.hint}>
           <p className={styles.hintText}>
-            <strong>Demo:</strong> admin / admin123
+            <strong>Demo:</strong> admin / password
           </p>
         </div>
       </div>

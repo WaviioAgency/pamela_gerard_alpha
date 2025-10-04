@@ -233,7 +233,13 @@ const AdminDashboard = ({ onClose }) => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <AdminOverview />;
+        return (
+          <AdminOverview 
+            onNavigateToTab={setActiveTab}
+            onAddCategory={() => resetCategoryForm()}
+            onAddPainting={() => resetPaintingForm()}
+          />
+        );
 
       case 'categories':
         return (

@@ -147,7 +147,7 @@ export const AdminProvider = ({ children }) => {
 
   const login = (username, password) => {
     // Simple authentication - in production, use proper authentication
-    if (username === 'admin' && password === 'admin123') {
+    if (username === 'pamelagerard06' && password === 'grrdpmla06000') {
       setIsAuthenticated(true);
       return true;
     }
