@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 
 const AdminContext = createContext();
 
@@ -16,137 +17,92 @@ export const AdminProvider = ({ children }) => {
     return savedAuth === 'true';
   });
 
-  const [categories, setCategories] = useState(() => {
-    const savedCategories = localStorage.getItem('adminCategories');
-    return savedCategories ? JSON.parse(savedCategories) : [
-      { 
-        id: 1, 
-        name: {
-          fr: 'Art abstrait',
-          en: 'Abstract Art',
-          hu: 'Absztrakt művészet'
-        },
-        description: {
-          fr: 'Œuvres abstraites explorant les formes et couleurs',
-          en: 'Abstract works exploring shapes and colors',
-          hu: 'Absztrakt művek, amelyek formákat és színeket fedeznek fel'
-        }
-      },
-      { 
-        id: 2, 
-        name: {
-          fr: 'Paysages',
-          en: 'Landscapes',
-          hu: 'Tájképek'
-        },
-        description: {
-          fr: 'Paysages naturels et urbains',
-          en: 'Natural and urban landscapes',
-          hu: 'Természeti és városi tájképek'
-        }
-      },
-      { 
-        id: 3, 
-        name: {
-          fr: 'Portraits',
-          en: 'Portraits',
-          hu: 'Portrék'
-        },
-        description: {
-          fr: 'Portraits expressifs et réalistes',
-          en: 'Expressive and realistic portraits',
-          hu: 'Kifejező és realisztikus portrék'
-        }
-      }
-    ];
-  });
-
-  const [paintings, setPaintings] = useState(() => {
-    const savedPaintings = localStorage.getItem('adminPaintings');
-    return savedPaintings ? JSON.parse(savedPaintings) : [
-      {
-        id: 1,
-        title: {
-          fr: 'J\'adore les fraises',
-          en: 'I love strawberries',
-          hu: 'Imádom az epret'
-        },
-        description: {
-          fr: 'Une œuvre délicate célébrant la beauté simple des fraises rouges.',
-          en: 'A delicate work celebrating the simple beauty of red strawberries.',
-          hu: 'Finom mű, amely a vörös eper egyszerű szépségét ünnepli.'
-        },
-        dimensions: '50x70 cm',
-        price: '350€',
-        poem: {
-          fr: 'Douces fraises rouges, délices de l\'été.',
-          en: 'Sweet red strawberries, summer delights.',
-          hu: 'Édes vörös eper, nyári gyönyörűség.'
-        },
-        categoryId: 1,
-        image: 'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&w=500'
-      },
-      {
-        id: 2,
-        title: {
-          fr: 'Sérénité marine',
-          en: 'Marine Serenity',
-          hu: 'Tengeri nyugalom'
-        },
-        description: {
-          fr: 'Un paysage marin apaisant aux tons bleus profonds.',
-          en: 'A soothing seascape in deep blue tones.',
-          hu: 'Egy megnyugtató tengeri táj mély kék tónusokban.'
-        },
-        dimensions: '40x60 cm',
-        price: '280€',
-        poem: {
-          fr: 'L\'océan murmure ses secrets éternels.',
-          en: 'The ocean whispers its eternal secrets.',
-          hu: 'Az óceán suttogja örök titkait.'
-        },
-        categoryId: 2,
-        image: 'https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=500'
-      },
-      {
-        id: 3,
-        title: {
-          fr: 'Regard profond',
-          en: 'Deep Gaze',
-          hu: 'Mély tekintet'
-        },
-        description: {
-          fr: 'Portrait expressif capturant l\'âme du modèle.',
-          en: 'Expressive portrait capturing the soul of the model.',
-          hu: 'Kifejező portré, amely megragadja a modell lelkét.'
-        },
-        dimensions: '30x40 cm',
-        price: '220€',
-        poem: {
-          fr: 'Dans les yeux se cache l\'histoire d\'une vie.',
-          en: 'In the eyes hides the story of a life.',
-          hu: 'A szemekben egy élet története rejtőzik.'
-        },
-        categoryId: 3,
-        image: 'https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&w=500'
-      }
-    ];
-  });
+  const [categories, setCategories] = useState([]);
+  const [paintings, setPaintings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     localStorage.setItem('adminAuth', isAuthenticated.toString());
   }, [isAuthenticated]);
 
   useEffect(() => {
-    localStorage.setItem('adminCategories', JSON.stringify(categories));
-  }, [categories]);
+    fetchCategories();
+    fetchPaintings();
+  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('adminPaintings', JSON.stringify(paintings));
-  }, [paintings]);
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+
+      const formattedCategories = data.map(cat => ({
+        id: cat.id,
+        name: {
+          fr: cat.name_fr,
+          en: cat.name_en,
+          hu: cat.name_hu
+        },
+        description: {
+          fr: cat.description_fr,
+          en: cat.description_en,
+          hu: cat.description_hu
+        },
+        created_at: cat.created_at
+      }));
+
+      setCategories(formattedCategories);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPaintings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('paintings')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+
+      const formattedPaintings = data.map(painting => ({
+        id: painting.id,
+        title: {
+          fr: painting.title_fr,
+          en: painting.title_en,
+          hu: painting.title_hu
+        },
+        description: {
+          fr: painting.description_fr,
+          en: painting.description_en,
+          hu: painting.description_hu
+        },
+        poem: {
+          fr: painting.poem_fr,
+          en: painting.poem_en,
+          hu: painting.poem_hu
+        },
+        dimensions: painting.dimensions,
+        price: painting.price,
+        categoryId: painting.category_id,
+        image: painting.image_url,
+        created_at: painting.created_at,
+        updated_at: painting.updated_at
+      }));
+
+      setPaintings(formattedPaintings);
+    } catch (error) {
+      console.error('Error fetching paintings:', error);
+    }
+  };
 
   const login = (username, password) => {
-    // Simple authentication - in production, use proper authentication
     if (username === 'pamelagerard06' && password === 'grrdpmla06000') {
       setIsAuthenticated(true);
       return true;
@@ -158,42 +114,227 @@ export const AdminProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  // Category CRUD operations
-  const addCategory = (category) => {
-    const newCategory = {
-      ...category,
-      id: Date.now()
-    };
-    setCategories(prev => [...prev, newCategory]);
-    return newCategory;
+  const addCategory = async (category) => {
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .insert([{
+          name_fr: category.name.fr,
+          name_en: category.name.en,
+          name_hu: category.name.hu,
+          description_fr: category.description.fr,
+          description_en: category.description.en,
+          description_hu: category.description.hu
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const newCategory = {
+        id: data.id,
+        name: {
+          fr: data.name_fr,
+          en: data.name_en,
+          hu: data.name_hu
+        },
+        description: {
+          fr: data.description_fr,
+          en: data.description_en,
+          hu: data.description_hu
+        },
+        created_at: data.created_at
+      };
+
+      setCategories(prev => [...prev, newCategory]);
+      return newCategory;
+    } catch (error) {
+      console.error('Error adding category:', error);
+      throw error;
+    }
   };
 
-  const updateCategory = (id, updatedCategory) => {
-    setCategories(prev => prev.map(cat => cat.id === id ? { ...cat, ...updatedCategory } : cat));
+  const updateCategory = async (id, updatedCategory) => {
+    try {
+      const { error } = await supabase
+        .from('categories')
+        .update({
+          name_fr: updatedCategory.name.fr,
+          name_en: updatedCategory.name.en,
+          name_hu: updatedCategory.name.hu,
+          description_fr: updatedCategory.description.fr,
+          description_en: updatedCategory.description.en,
+          description_hu: updatedCategory.description.hu
+        })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setCategories(prev => prev.map(cat =>
+        cat.id === id ? { ...cat, ...updatedCategory } : cat
+      ));
+    } catch (error) {
+      console.error('Error updating category:', error);
+      throw error;
+    }
   };
 
-  const deleteCategory = (id) => {
-    setCategories(prev => prev.filter(cat => cat.id !== id));
-    // Also remove paintings from this category
-    setPaintings(prev => prev.filter(painting => painting.categoryId !== id));
+  const deleteCategory = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setCategories(prev => prev.filter(cat => cat.id !== id));
+      setPaintings(prev => prev.filter(painting => painting.categoryId !== id));
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      throw error;
+    }
   };
 
-  // Painting CRUD operations
-  const addPainting = (painting) => {
-    const newPainting = {
-      ...painting,
-      id: Date.now()
-    };
-    setPaintings(prev => [...prev, newPainting]);
-    return newPainting;
+  const uploadImage = async (file) => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = fileName;
+
+      const { error: uploadError } = await supabase.storage
+        .from('paintings')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('paintings')
+        .getPublicUrl(filePath);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
   };
 
-  const updatePainting = (id, updatedPainting) => {
-    setPaintings(prev => prev.map(painting => painting.id === id ? { ...painting, ...updatedPainting } : painting));
+  const addPainting = async (painting) => {
+    try {
+      let imageUrl = painting.image;
+
+      if (painting.imageFile) {
+        imageUrl = await uploadImage(painting.imageFile);
+      }
+
+      const { data, error } = await supabase
+        .from('paintings')
+        .insert([{
+          category_id: painting.categoryId,
+          image_url: imageUrl,
+          title_fr: painting.title.fr,
+          title_en: painting.title.en,
+          title_hu: painting.title.hu,
+          description_fr: painting.description.fr,
+          description_en: painting.description.en,
+          description_hu: painting.description.hu,
+          poem_fr: painting.poem?.fr || '',
+          poem_en: painting.poem?.en || '',
+          poem_hu: painting.poem?.hu || '',
+          dimensions: painting.dimensions,
+          price: painting.price
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const newPainting = {
+        id: data.id,
+        title: {
+          fr: data.title_fr,
+          en: data.title_en,
+          hu: data.title_hu
+        },
+        description: {
+          fr: data.description_fr,
+          en: data.description_en,
+          hu: data.description_hu
+        },
+        poem: {
+          fr: data.poem_fr,
+          en: data.poem_en,
+          hu: data.poem_hu
+        },
+        dimensions: data.dimensions,
+        price: data.price,
+        categoryId: data.category_id,
+        image: data.image_url,
+        created_at: data.created_at,
+        updated_at: data.updated_at
+      };
+
+      setPaintings(prev => [...prev, newPainting]);
+      return newPainting;
+    } catch (error) {
+      console.error('Error adding painting:', error);
+      throw error;
+    }
   };
 
-  const deletePainting = (id) => {
-    setPaintings(prev => prev.filter(painting => painting.id !== id));
+  const updatePainting = async (id, updatedPainting) => {
+    try {
+      let imageUrl = updatedPainting.image;
+
+      if (updatedPainting.imageFile) {
+        imageUrl = await uploadImage(updatedPainting.imageFile);
+      }
+
+      const { error } = await supabase
+        .from('paintings')
+        .update({
+          category_id: updatedPainting.categoryId,
+          image_url: imageUrl,
+          title_fr: updatedPainting.title.fr,
+          title_en: updatedPainting.title.en,
+          title_hu: updatedPainting.title.hu,
+          description_fr: updatedPainting.description.fr,
+          description_en: updatedPainting.description.en,
+          description_hu: updatedPainting.description.hu,
+          poem_fr: updatedPainting.poem?.fr || '',
+          poem_en: updatedPainting.poem?.en || '',
+          poem_hu: updatedPainting.poem?.hu || '',
+          dimensions: updatedPainting.dimensions,
+          price: updatedPainting.price,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setPaintings(prev => prev.map(painting =>
+        painting.id === id ? { ...painting, ...updatedPainting, image: imageUrl } : painting
+      ));
+    } catch (error) {
+      console.error('Error updating painting:', error);
+      throw error;
+    }
+  };
+
+  const deletePainting = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('paintings')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setPaintings(prev => prev.filter(painting => painting.id !== id));
+    } catch (error) {
+      console.error('Error deleting painting:', error);
+      throw error;
+    }
   };
 
   return (
@@ -201,6 +342,7 @@ export const AdminProvider = ({ children }) => {
       isAuthenticated,
       categories,
       paintings,
+      loading,
       login,
       logout,
       addCategory,

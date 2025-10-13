@@ -1,0 +1,131 @@
+.container {
+  width: 100%;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+.dropzone:hover {
+  border-color: #1999C5;
+  background: #f1f5f9;
+}
+
+.dropzone.dragging {
+  border-color: #1999C5;
+  background: #e0f2fe;
+  border-style: solid;
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.uploadIcon {
+  width: 48px;
+  height: 48px;
+  color: #64748b;
+}
+
+.mainText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #334155;
+  margin: 0;
+}
+
+.subText {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.preview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.previewActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.changeButton,
+.removeButton {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.changeButton {
+  background: #1999C5;
+  color: white;
+}
+
+.changeButton:hover {
+  background: #157a9d;
+}
+
+.removeButton {
+  background: #ef4444;
+  color: white;
+}
+
+.removeButton:hover {
+  background: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .dropzone {
+    padding: 32px 16px;
+  }
+
+  .uploadIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mainText {
+    font-size: 14px;
+  }
+
+  .subText {
+    font-size: 12px;
+  }
+
+  .preview {
+    max-width: 100%;
+    max-height: 300px;
+  }
+}

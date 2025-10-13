@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAdmin } from '../../contexts/AdminContext';
 import AdminOverview from './AdminOverview';
+import ImageUpload from './ImageUpload';
 import { createMultilingualText, getTranslatedText } from '../../utils/translator';
 import styles from './AdminDashboard.module.css';
 
@@ -38,7 +39,8 @@ const AdminDashboard = ({ onClose }) => {
     price: '',
     poem: { fr: '', en: '', hu: '' },
     categoryId: '',
-    image: ''
+    image: '',
+    imageFile: null
   });
 
   const handleLogout = () => {
@@ -63,32 +65,37 @@ const AdminDashboard = ({ onClose }) => {
       price: '',
       poem: { fr: '', en: '', hu: '' },
       categoryId: '',
-      image: ''
+      image: '',
+      imageFile: null
     });
     setIsEditing(false);
     setEditingItem(null);
   };
 
-  const handlePaintingSubmit = (e) => {
+  const handlePaintingSubmit = async (e) => {
     e.preventDefault();
-    
+
     const paintingData = {
       title: paintingForm.title,
       description: paintingForm.description,
       poem: paintingForm.poem,
       dimensions: paintingForm.dimensions,
       price: paintingForm.price,
-      categoryId: parseInt(paintingForm.categoryId),
-      image: paintingForm.image
+      categoryId: paintingForm.categoryId,
+      image: paintingForm.image,
+      imageFile: paintingForm.imageFile
     };
-    
-    if (isEditing) {
-      updatePainting(editingItem.id, paintingData);
-    } else {
-      addPainting(paintingData);
+
+    try {
+      if (isEditing) {
+        await updatePainting(editingItem.id, paintingData);
+      } else {
+        await addPainting(paintingData);
+      }
+      resetPaintingForm();
+    } catch (error) {
+      alert('Erreur lors de l\'enregistrement du tableau');
     }
-    
-    resetPaintingForm();
   };
 
   const handleCategorySubmit = (e) => {
@@ -205,8 +212,9 @@ const AdminDashboard = ({ onClose }) => {
       },
       dimensions: painting.dimensions || '',
       price: painting.price || '',
-      categoryId: painting.categoryId.toString(),
-      image: painting.image || ''
+      categoryId: painting.categoryId,
+      image: painting.image || '',
+      imageFile: null
     });
     setEditingItem(painting);
     setShowPaintingModal(true);
@@ -505,14 +513,10 @@ const AdminDashboard = ({ onClose }) => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>URL de l'image *</label>
-                  <input
-                    type="url"
-                    value={paintingForm.image}
-                    onChange={(e) => setPaintingForm(prev => ({ ...prev, image: e.target.value }))}
-                    className={styles.input}
-                    placeholder="https://example.com/image.jpg"
-                    required
+                  <label className={styles.label}>Image du tableau *</label>
+                  <ImageUpload
+                    initialImage={paintingForm.image}
+                    onImageSelect={(file) => setPaintingForm(prev => ({ ...prev, imageFile: file }))}
                   />
                 </div>
 
